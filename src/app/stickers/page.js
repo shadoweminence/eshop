@@ -12,7 +12,7 @@ const page = () => {
                 <img
                   alt="ecommerce"
                   className="m-auto md:m-0 h-64 block"
-                  src="https://m.media-amazon.com/images/I/71F4P1t80EL._AC_SX385_.jpg"
+                  src="https://m.media-amazon.com/images/I/71JD1SelGjL._AC_SY679_PIbundle-2,TopRight,0,0_SH20_.jpg"
                 />
               </a>
               <div className="text-center md:text-left mt-4">
@@ -40,7 +40,7 @@ const page = () => {
                 <img
                   alt="ecommerce"
                   className="m-auto md:m-0 h-64 block"
-                  src="https://m.media-amazon.com/images/I/71F4P1t80EL._AC_SX385_.jpg"
+                  src="https://m.media-amazon.com/images/I/71JD1SelGjL._AC_SY679_PIbundle-2,TopRight,0,0_SH20_.jpg"
                 />
               </a>
               <div className="text-center md:text-left mt-4">
@@ -68,7 +68,7 @@ const page = () => {
                 <img
                   alt="ecommerce"
                   className="m-auto md:m-0 h-64 block"
-                  src="https://m.media-amazon.com/images/I/71F4P1t80EL._AC_SX385_.jpg"
+                  src="https://m.media-amazon.com/images/I/71JD1SelGjL._AC_SY679_PIbundle-2,TopRight,0,0_SH20_.jpg"
                 />
               </a>
               <div className="text-center md:text-left mt-4">
@@ -96,7 +96,7 @@ const page = () => {
                 <img
                   alt="ecommerce"
                   className="m-auto md:m-0 h-64 block"
-                  src="https://m.media-amazon.com/images/I/71F4P1t80EL._AC_SX385_.jpg"
+                  src="https://m.media-amazon.com/images/I/71JD1SelGjL._AC_SY679_PIbundle-2,TopRight,0,0_SH20_.jpg"
                 />
               </a>
               <div className="text-center md:text-left mt-4">
@@ -124,7 +124,7 @@ const page = () => {
                 <img
                   alt="ecommerce"
                   className="m-auto md:m-0 h-64 block"
-                  src="https://m.media-amazon.com/images/I/71F4P1t80EL._AC_SX385_.jpg"
+                  src="https://m.media-amazon.com/images/I/71JD1SelGjL._AC_SY679_PIbundle-2,TopRight,0,0_SH20_.jpg"
                 />
               </a>
               <div className="text-center md:text-left mt-4">
@@ -152,7 +152,7 @@ const page = () => {
                 <img
                   alt="ecommerce"
                   className="m-auto md:m-0 h-64 block"
-                  src="https://m.media-amazon.com/images/I/71F4P1t80EL._AC_SX385_.jpg"
+                  src="https://m.media-amazon.com/images/I/71JD1SelGjL._AC_SY679_PIbundle-2,TopRight,0,0_SH20_.jpg"
                 />
               </a>
               <div className="text-center md:text-left mt-4">
@@ -180,7 +180,7 @@ const page = () => {
                 <img
                   alt="ecommerce"
                   className="m-auto md:m-0 h-64 block"
-                  src="https://m.media-amazon.com/images/I/71F4P1t80EL._AC_SX385_.jpg"
+                  src="https://m.media-amazon.com/images/I/71JD1SelGjL._AC_SY679_PIbundle-2,TopRight,0,0_SH20_.jpg"
                 />
               </a>
               <div className="text-center md:text-left mt-4">
@@ -208,7 +208,7 @@ const page = () => {
                 <img
                   alt="ecommerce"
                   className="m-auto md:m-0 h-64 block"
-                  src="https://m.media-amazon.com/images/I/71F4P1t80EL._AC_SX385_.jpg"
+                  src="https://m.media-amazon.com/images/I/71JD1SelGjL._AC_SY679_PIbundle-2,TopRight,0,0_SH20_.jpg"
                 />
               </a>
               <div className="text-center md:text-left mt-4">
