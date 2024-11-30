@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import Link from "next/link";
 import { FaShoppingCart, FaPlus, FaMinus } from "react-icons/fa";
 import { GiCrossedBones, GiShoppingBag } from "react-icons/gi";
+import { MdAccountCircle } from "react-icons/md";
 import { useCart } from "@/context/CartProvider";
 
 const Navbar = () => {
@@ -20,7 +21,7 @@ const Navbar = () => {
   };
   const ref = useRef();
   return (
-    <div className="flex flex-col md:flex-row md:justify-start justify-center  py-2 items-center shadow-md">
+    <div className="flex flex-col md:flex-row md:justify-start justify-center  py-2 items-center shadow-md sticky top-0 z-10 bg-white">
       <div className="logo mx-5">
         <Link href={"/"}>
           {" "}
@@ -43,16 +44,19 @@ const Navbar = () => {
           </Link>
         </ul>
       </div>
-      <div
-        onClick={toggleCart}
-        className="cart absolute right-0  cursor-pointer top-4  mx-5"
-      >
-        <FaShoppingCart className="text-xl md:text-3xl" />
+      <div className="cart absolute right-0  cursor-pointer top-4  mx-5 flex">
+        <Link href={"/Login"}>
+          <MdAccountCircle className="text-xl md:text-3xl mx-2" />
+        </Link>
+        <FaShoppingCart
+          onClick={toggleCart}
+          className="text-xl md:text-3xl mx-2"
+        />
       </div>
 
       <div
         ref={ref}
-        className="w-72 h-full sideCart absolute top-0 right-0 bg-blue-100 py-10 px-8 transition-transform translate-x-full transform z-50"
+        className="w-72 h-[100vh] sideCart absolute top-0 right-0 bg-blue-100 py-10 px-8 transition-transform translate-x-full transform z-50"
       >
         <h2 className="font-bold text-center text-xl">Shopping Cart</h2>
         <span
@@ -107,10 +111,12 @@ const Navbar = () => {
           })}
         </ol>
         <div className="flex">
-          <button className="flex  text-white bg-blue-400 border-0 py-2 px-2 focus:outline-none hover:bg-blue-500 rounded text-sm">
-            <GiShoppingBag className="my-0 mx-2" />
-            Check Out
-          </button>
+          <Link href="/checkout">
+            <button className="flex  text-white bg-blue-400 border-0 py-2 px-2 focus:outline-none hover:bg-blue-500 rounded text-sm">
+              <GiShoppingBag className="my-0 mx-2" />
+              Check Out
+            </button>
+          </Link>
 
           <button
             onClick={clearCart}

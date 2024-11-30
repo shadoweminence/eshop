@@ -6,7 +6,7 @@ const page = () => {
     <div>
       <section className="text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">
-          <div className="flex flex-wrap -m-4">
+          <div className="flex flex-wrap -m-4 justify-center">
             <div className="lg:w-80 md:w-5/12 p-4 w-full shadow-lg mx-4 my-4">
               <a className="block relative rounded overflow-hidden">
                 <img

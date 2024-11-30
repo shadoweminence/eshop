@@ -188,7 +188,7 @@ const Post = () => {
                 </button>
                 <button
                   onClick={() => {
-                    addToCart(slug, 1, 499, "best T-shirt", "XL", "Red");
+                    addToCart(slug, 1, 500, "best T-shirt", "XL", "Red");
                   }}
                   className="flex ml-2 md:ml-5 text-sm text-white bg-blue-500 border-0 py-2 px-2 focus:outline-none hover:bg-blue-600 rounded"
                 >
