@@ -2,14 +2,50 @@
 
 import { useCart } from "@/context/CartProvider";
 import { useParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Post = () => {
   const { cart, addToCart, clearCart, removeFromCart, subTotal } = useCart();
   const { slug } = useParams();
   const decodedSlug = decodeURIComponent(slug);
+  const [products, setProducts] = useState(null);
+  const [colorSizeSlug, setColorSizeSlug] = useState({});
+  const [size, setSize] = useState(colorSizeSlug.size);
   const [pin, setPin] = useState();
   const [service, setService] = useState();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:3000/api/Products/getProducts"
+        );
+        const data = await response.json();
+        const items = data.products;
+
+        //Find current product
+        const currentProduct = items.find((item) => item.slug === decodedSlug);
+        setProducts(currentProduct);
+
+        //BUild color-size map
+        const relatedProducts = items.filter(
+          (item) => item.title === currentProduct.title
+        );
+
+        const tempColorSizeSlug = {};
+        relatedProducts.forEach((item) => {
+          if (!tempColorSizeSlug[item.color])
+            tempColorSizeSlug[item.color] = {};
+          if (!tempColorSizeSlug[item.size]) tempColorSizeSlug[item.size] = {};
+          tempColorSizeSlug[item.color][item.size] = { slug: item.slug };
+        });
+        setColorSizeSlug(tempColorSizeSlug);
+      } catch (error) {
+        console.log("Error fetching products:", error);
+      }
+    };
+    fetchProducts();
+  }, [decodedSlug]);
 
   const checkServicability = async () => {
     let pins = await fetch("http://localhost:3000/api/pincode");
@@ -24,6 +60,8 @@ const Post = () => {
   const onChangePin = (e) => {
     setPin(e.target.value);
   };
+  if (!products) return <div>Loading...</div>;
+
   return (
     <>
       <section className="text-gray-600 body-font overflow-hidden">
@@ -32,14 +70,14 @@ const Post = () => {
             <img
               alt="ecommerce"
               className="lg:w-2/5 w-auto px-24 lg:h-auto object-cover object-top rounded"
-              src="https://m.media-amazon.com/images/I/71F4P1t80EL._AC_SX385_.jpg"
+              src={products.img}
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">
                 SHOPLUNCH
               </h2>
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-                Best T-shirt
+                {products.title}
               </h1>
               <div className="flex mb-4">
                 <span className="flex items-center">
@@ -139,29 +177,50 @@ const Post = () => {
                   </a>
                 </span>
               </div>
-              <p className="leading-relaxed">
-                Fam locavore kickstarter distillery. Mixtape chillwave tumeric
-                sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo
-                juiceramps cornhole raw denim forage brooklyn. Everyday carry +1
-                seitan poutine tumeric. Gastropub blue bottle austin listicle
-                pour-over, neutra jean shorts keytar banjo tattooed umami
-                cardigan.
-              </p>
+              <p className="leading-relaxed">{products.desc}</p>
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                 <div className="flex">
                   <span className="mr-3">Color</span>
-                  <button className="border-2 border-gray-300 rounded-full w-6 h-6 focus:outline-none"></button>
-                  <button className="border-2 border-gray-300 ml-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none"></button>
-                  <button className="border-2 border-gray-300 ml-1 bg-blue-500 rounded-full w-6 h-6 focus:outline-none"></button>
+                  {Object.keys(colorSizeSlug).includes("black") &&
+                    Object.keys(colorSizeSlug["black"]).includes(size) && (
+                      <button className="border-2 border-gray-300 ml-1 bg-black  rounded-full w-6 h-6 focus:outline-none"></button>
+                    )}
+                  {Object.keys(colorSizeSlug).includes("red") &&
+                    Object.keys(colorSizeSlug["red"]).includes(size) && (
+                      <button className="border-2 border-gray-300 ml-1 bg-red-500 rounded-full w-6 h-6 focus:outline-none"></button>
+                    )}
+                  {Object.keys(colorSizeSlug).includes("blue") &&
+                    Object.keys(colorSizeSlug["blue"]).includes(size) && (
+                      <button className="border-2 border-gray-300 ml-1 bg-blue-500  rounded-full w-6 h-6 focus:outline-none"></button>
+                    )}
+                  {Object.keys(colorSizeSlug).includes("green") &&
+                    Object.keys(colorSizeSlug["green"]).includes(size) && (
+                      <button className="border-2 border-gray-300 ml-1 bg-green-500  rounded-full w-6 h-6 focus:outline-none"></button>
+                    )}
+                  {Object.keys(colorSizeSlug).includes("grey") &&
+                    Object.keys(colorSizeSlug["grey"]).includes(size) && (
+                      <button className="border-2 border-gray-300 ml-1 bg-gray-500 rounded-full w-6 h-6 focus:outline-none"></button>
+                    )}
                 </div>
                 <div className="flex ml-6 items-center">
                   <span className="mr-3">Size</span>
                   <div className="relative">
                     <select className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-500 text-base pl-3 pr-10">
-                      <option>SM</option>
-                      <option>M</option>
-                      <option>L</option>
-                      <option>XL</option>
+                      {Object.keys(colorSizeSlug).includes("S") && (
+                        <option>S</option>
+                      )}
+                      {Object.keys(colorSizeSlug).includes("M") && (
+                        <option>M</option>
+                      )}
+                      {Object.keys(colorSizeSlug).includes("L") && (
+                        <option>L</option>
+                      )}
+                      {Object.keys(colorSizeSlug).includes("XL") && (
+                        <option>XL</option>
+                      )}
+                      {Object.keys(colorSizeSlug).includes("XXL") && (
+                        <option>XXL</option>
+                      )}
                     </select>
                     <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
                       <svg
