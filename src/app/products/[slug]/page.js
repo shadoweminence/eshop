@@ -1,14 +1,15 @@
 "use client";
 
 import { useCart } from "@/context/CartProvider";
-import { useParams } from "next/navigation";
-
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Post = () => {
-  const { cart, addToCart, clearCart, removeFromCart, subTotal } = useCart();
+  const { cart, addToCart, buyNow, removeFromCart, subTotal } = useCart();
   const { slug } = useParams();
-
+  const router = useRouter();
   const decodedSlug = decodeURIComponent(slug);
   const [products, setProducts] = useState(null);
   const [colorSizeSlug, setColorSizeSlug] = useState({});
@@ -71,6 +72,7 @@ const Post = () => {
     setPin(e.target.value);
   };
   if (!products) return <div>Loading...</div>;
+
   return (
     <>
       <section className="text-gray-600 body-font overflow-hidden">
@@ -306,12 +308,31 @@ const Post = () => {
                 <span className="title-font font-medium text-2xl text-gray-900">
                   {products.price}
                 </span>{" "}
-                <button className="flex ml-3 md:ml-8 text-sm text-white bg-blue-500 border-0 py-2 px-2 focus:outline-none hover:bg-blue-600 rounded">
+                <button
+                  onClick={() => {
+                    buyNow(
+                      slug,
+                      1,
+                      products.price,
+                      products.title,
+                      size,
+                      color
+                    );
+                  }}
+                  className="flex ml-3 md:ml-8 text-sm text-white bg-blue-500 border-0 py-2 px-2 focus:outline-none hover:bg-blue-600 rounded"
+                >
                   Buy Now
                 </button>
                 <button
                   onClick={() => {
-                    addToCart(slug, 1, 500, products.title, size, color);
+                    addToCart(
+                      slug,
+                      1,
+                      products.price,
+                      products.title,
+                      size,
+                      color
+                    );
                   }}
                   className="flex ml-2 md:ml-5 text-sm text-white bg-blue-500 border-0 py-2 px-2 focus:outline-none hover:bg-blue-600 rounded"
                 >

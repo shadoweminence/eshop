@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 const CartContext = createContext();
@@ -10,6 +11,7 @@ export const useCart = () => {
 
 const CartProvider = ({ children }) => {
   const [cart, setCart] = useState({});
+  const router = useRouter();
   const [subTotal, setSubTotal] = useState(0);
   useEffect(() => {
     try {
@@ -47,6 +49,15 @@ const CartProvider = ({ children }) => {
     saveCart(newCart);
   };
 
+  const buyNow = (itemCode, qty, price, name, size, color) => {
+    let newCart = { itemCode: { qty: 1, price, name, size, color } };
+
+    setCart(newCart);
+
+    saveCart(newCart);
+    router.push("/checkout");
+  };
+
   const clearCart = () => {
     setCart({});
     saveCart({});
@@ -65,7 +76,7 @@ const CartProvider = ({ children }) => {
   };
   return (
     <CartContext.Provider
-      value={{ cart, subTotal, addToCart, clearCart, removeFromCart }}
+      value={{ buyNow, cart, subTotal, addToCart, clearCart, removeFromCart }}
     >
       {children}
     </CartContext.Provider>
