@@ -71,6 +71,7 @@ const Post = () => {
     setPin(e.target.value);
   };
   if (!products) return <div>Loading...</div>;
+  console.log(products.slug);
   return (
     <>
       <section className="text-gray-600 body-font overflow-hidden">
@@ -88,7 +89,7 @@ const Post = () => {
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
                 {products.title}
               </h1>
-              {/* <div className="flex mb-4">
+              <div className="flex mb-4">
                 <span className="flex items-center">
                   <svg
                     fill="currentColor"
@@ -185,7 +186,7 @@ const Post = () => {
                     </svg>
                   </a>
                 </span>
-              </div> */}
+              </div>
 
               <p className="leading-relaxed">{products.desc}</p>
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
@@ -260,7 +261,6 @@ const Post = () => {
                       ></button>
                     )}
                 </div>
-
                 <div className="flex ml-6 items-center">
                   <span className="mr-3">Size</span>
                   <div className="relative">
@@ -271,19 +271,19 @@ const Post = () => {
                       className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-500 text-base pl-3 pr-10"
                     >
                       {Object.keys(colorSizeSlug).includes("S") && (
-                        <option value="S">S</option>
+                        <option>S</option>
                       )}
                       {Object.keys(colorSizeSlug).includes("M") && (
-                        <option value="M">M</option>
+                        <option>M</option>
                       )}
                       {Object.keys(colorSizeSlug).includes("L") && (
-                        <option value="L">L</option>
+                        <option>L</option>
                       )}
                       {Object.keys(colorSizeSlug).includes("XL") && (
-                        <option value="XL">XL</option>
+                        <option>XL</option>
                       )}
                       {Object.keys(colorSizeSlug).includes("XXL") && (
-                        <option value="XXL">XXL</option>
+                        <option>XXL</option>
                       )}
                     </select>
                     <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
@@ -311,13 +311,13 @@ const Post = () => {
                 </button>
                 <button
                   onClick={() => {
-                    addToCart(slug, 1, 500, products.title, size, color);
+                    addToCart(slug, 1, 500, "best T-shirt", "XL", "Red");
                   }}
                   className="flex ml-2 md:ml-5 text-sm text-white bg-blue-500 border-0 py-2 px-2 focus:outline-none hover:bg-blue-600 rounded"
                 >
                   Add to Cart
                 </button>
-                {/* <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+                <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                   <svg
                     fill="currentColor"
                     strokeLinecap="round"
@@ -328,7 +328,7 @@ const Post = () => {
                   >
                     <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
                   </svg>
-                </button> */}
+                </button>
               </div>
               <div className="pin mt-6 flex space-x-2 text-sm">
                 <input

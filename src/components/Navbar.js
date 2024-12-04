@@ -19,6 +19,7 @@ const Navbar = () => {
       ref.current.classList.add("translate-x-full");
     }
   };
+
   const ref = useRef();
   return (
     <div className="flex flex-col md:flex-row md:justify-start justify-center  py-2 items-center shadow-md sticky top-0 z-10 bg-white">
@@ -30,27 +31,33 @@ const Navbar = () => {
       </div>
       <div className="nav">
         <ul className="flex items-center space-x-3 font-bold md:text-xl">
-          <Link href="/tshirts">
+          <Link className=" cursor-pointer hover:text-blue-600" href="/tshirts">
             <li>Tshirts</li>
           </Link>
-          <Link href={"/hoodies"}>
+          <Link
+            className=" cursor-pointer hover:text-blue-600"
+            href={"/hoodies"}
+          >
             <li>Hoddies</li>
           </Link>
-          <Link href={"/stickers"}>
+          <Link
+            className=" cursor-pointer hover:text-blue-600"
+            href={"/stickers"}
+          >
             <li>Stickers</li>
           </Link>
-          <Link href={"/mugs"}>
+          <Link className=" cursor-pointer hover:text-blue-600" href={"/mugs"}>
             <li>Mugs</li>
           </Link>
         </ul>
       </div>
       <div className="cart absolute right-0  cursor-pointer top-4  mx-5 flex">
         <Link href={"/Login"}>
-          <MdAccountCircle className="text-xl md:text-3xl mx-2" />
+          <MdAccountCircle className="text-xl hover:text-blue-600 md:text-3xl mx-2" />
         </Link>
         <FaShoppingCart
           onClick={toggleCart}
-          className="text-xl md:text-3xl mx-2"
+          className="text-xl hover:text-blue-600 md:text-3xl mx-2"
         />
       </div>
 
@@ -75,7 +82,9 @@ const Navbar = () => {
             return (
               <li key={k}>
                 <div className="item flex my-5">
-                  <div className="w-2/3 font-semibold">{cart[k].name}</div>
+                  <div className="w-2/3 font-semibold">
+                    {cart[k].name}({cart[k].size}/{cart[k].color})
+                  </div>
                   <div className="w-1/3 flex font-semibold text-lg ">
                     <FaMinus
                       onClick={() => {
@@ -109,6 +118,7 @@ const Navbar = () => {
               </li>
             );
           })}
+          <h3>Subtotal = Rs. {subTotal}</h3>
         </ol>
         <div className="flex">
           <Link href="/checkout">

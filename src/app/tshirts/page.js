@@ -101,7 +101,10 @@ const page = async () => {
                         {tshirt.color.includes("blue") && (
                           <button className="border border-gray-300 px-1 mx-1 bg-blue-700 rounded-full w-6 h-6 focus:outline-none"></button>
                         )}
-                        {tshirt.color.includes("grey") && (
+                        {tshirt.color.includes("green") && (
+                          <button className="border border-gray-300 px-1 mx-1 bg-green-700 rounded-full w-6 h-6 focus:outline-none"></button>
+                        )}
+                        {tshirt.color.includes("gray") && (
                           <button className="border border-gray-300 px-1 mx-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none"></button>
                         )}
                       </div>

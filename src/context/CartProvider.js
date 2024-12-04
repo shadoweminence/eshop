@@ -12,7 +12,6 @@ const CartProvider = ({ children }) => {
   const [cart, setCart] = useState({});
   const [subTotal, setSubTotal] = useState(0);
   useEffect(() => {
-    console.log("cndxm");
     try {
       if (localStorage.getItem("cart")) {
         setCart(JSON.parse(localStorage.getItem("cart")));
@@ -33,12 +32,16 @@ const CartProvider = ({ children }) => {
     }
     setSubTotal(subt);
   };
-  const addToCart = (itemCode, qty, price, name, size, variant) => {
+  const addToCart = (itemCode, qty, price, name, size, color) => {
     let newCart = cart;
-    if (itemCode in cart) {
-      newCart[itemCode].qty = cart[itemCode].qty + qty;
+
+    // Create a unique key that includes itemCode, size, and color
+    const uniqueKey = `${itemCode}-${size}-${color}`;
+
+    if (uniqueKey in cart) {
+      newCart[uniqueKey].qty = cart[uniqueKey].qty + qty;
     } else {
-      newCart[itemCode] = { qty: 1, price, name, size, variant };
+      newCart[uniqueKey] = { qty: 1, price, name, size, color };
     }
     setCart(newCart);
     saveCart(newCart);
@@ -49,7 +52,7 @@ const CartProvider = ({ children }) => {
     saveCart({});
   };
 
-  const removeFromCart = (itemCode, qty, price, name, size, variant) => {
+  const removeFromCart = (itemCode, qty, price, name, size, color) => {
     let newCart = cart;
     if (itemCode in cart) {
       newCart[itemCode].qty = cart[itemCode].qty - qty;
