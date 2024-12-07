@@ -1,9 +1,86 @@
+"use client";
 import React from "react";
+
 import Link from "next/link";
+import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
+import { useCart } from "@/context/CartProvider";
 
 const page = () => {
+  const router = useRouter();
+  const { setUser } = useCart();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleChange = (e) => {
+    if (e.target.name == "email") {
+      setEmail(e.target.value);
+    }
+    if (e.target.name == "password") {
+      setPassword(e.target.value);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = { email, password };
+    const res = await fetch("http://localhost:3000/api/user/login", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application-json",
+      },
+    });
+    let response = await res.json();
+
+    console.log(response);
+    setEmail("");
+    setPassword("");
+    if (response.success) {
+      localStorage.setItem("token", response.token);
+      setUser({ value: response.token });
+      toast.success("🦄Login Successful", {
+        position: "top-left",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setTimeout(() => {
+        router.push("http://localhost:3000");
+      }, 1000);
+    } else {
+      toast.error(response.error, {
+        position: "top-left",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
   return (
     <div>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <div className="flex min-h-full flex-col justify-center sm:px-6 px-4 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -26,7 +103,12 @@ const page = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-6"
+            action="#"
+            method="POST"
+          >
             <div>
               <label
                 htmlFor="email"
@@ -36,6 +118,8 @@ const page = () => {
               </label>
               <div className="mt-2">
                 <input
+                  value={email}
+                  onChange={handleChange}
                   type="email"
                   name="email"
                   id="email"
@@ -60,6 +144,8 @@ const page = () => {
               </div>
               <div className="mt-2">
                 <input
+                  value={password}
+                  onChange={handleChange}
                   type="password"
                   name="password"
                   id="password"

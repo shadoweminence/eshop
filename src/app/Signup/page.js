@@ -1,9 +1,74 @@
+"use client";
 import React from "react";
+
 import Link from "next/link";
+import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router = useRouter();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleChange = (e) => {
+    if (e.target.name == "name") {
+      setName(e.target.value);
+    }
+    if (e.target.name == "email") {
+      setEmail(e.target.value);
+    }
+    if (e.target.name == "password") {
+      setPassword(e.target.value);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = { name, email, password };
+    const res = await fetch("http://localhost:3000/api/user/signup", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application-json",
+      },
+    });
+    let response = await res.json();
+
+    console.log(response);
+    setEmail("");
+    setName("");
+    setPassword("");
+    toast.success("🦄 Your account has been created!", {
+      position: "top-left",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+    setTimeout(() => {
+      router.push("http://localhost:3000");
+    }, 1000);
+  };
   return (
     <div>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <div className="flex min-h-full flex-col justify-center sm:px-6 px-4 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -26,7 +91,12 @@ const page = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-6"
+            action="#"
+            method="POST"
+          >
             <div>
               <label
                 htmlFor="name"
@@ -36,6 +106,8 @@ const page = () => {
               </label>
               <div className="mt-2">
                 <input
+                  value={name}
+                  onChange={handleChange}
                   type="text"
                   name="name"
                   id="name"
@@ -55,6 +127,8 @@ const page = () => {
               </label>
               <div className="mt-2">
                 <input
+                  value={email}
+                  onChange={handleChange}
                   type="email"
                   name="email"
                   id="email"
@@ -76,6 +150,8 @@ const page = () => {
               </div>
               <div className="mt-2">
                 <input
+                  value={password}
+                  onChange={handleChange}
                   type="password"
                   name="password"
                   id="password"

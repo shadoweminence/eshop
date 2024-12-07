@@ -16,7 +16,6 @@ const Post = () => {
   const [size, setSize] = useState(colorSizeSlug.size);
   const [color, setColor] = useState(colorSizeSlug.color);
   const [pin, setPin] = useState();
-  const [service, setService] = useState();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -62,9 +61,27 @@ const Post = () => {
     let pins = await fetch("http://localhost:3000/api/pincode");
     let pinJson = await pins.json();
     if (pinJson.includes(parseInt(pin))) {
-      setService(true);
+      toast.success("🦄 Your Code is Servicable!", {
+        position: "bottom-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     } else {
-      setService(false);
+      toast.error("🦄 Sorry! We do not deliver to this place yet.", {
+        position: "bottom-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -76,6 +93,18 @@ const Post = () => {
   return (
     <>
       <section className="text-gray-600 body-font overflow-hidden">
+        <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         <div className="container px-5 py-16 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img
@@ -306,7 +335,7 @@ const Post = () => {
               </div>
               <div className="flex">
                 <span className="title-font font-medium text-2xl text-gray-900">
-                  {products.price}
+                  Rs. {products.price}
                 </span>{" "}
                 <button
                   onClick={() => {
@@ -365,16 +394,6 @@ const Post = () => {
                   Check
                 </button>
               </div>
-              {!service && service != null && (
-                <div className="text-red-700 text-sm">
-                  Sorry! We do not deliver to this place yet
-                </div>
-              )}
-              {service && (
-                <div className="text-green-700 text-sm">
-                  Yes!We deliver to this place.
-                </div>
-              )}
             </div>
           </div>
         </div>

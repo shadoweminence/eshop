@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Link from "next/link";
 import { FaShoppingCart, FaPlus, FaMinus } from "react-icons/fa";
 import { GiCrossedBones, GiShoppingBag } from "react-icons/gi";
@@ -8,7 +8,9 @@ import { MdAccountCircle } from "react-icons/md";
 import { useCart } from "@/context/CartProvider";
 
 const Navbar = () => {
-  const { cart, addToCart, clearCart, removeFromCart, subTotal } = useCart();
+  const { logout, cart, user, addToCart, clearCart, removeFromCart, subTotal } =
+    useCart();
+  const [dropdown, setDropdown] = useState(false);
 
   const toggleCart = () => {
     if (ref.current.classList.contains("translate-x-full")) {
@@ -18,6 +20,10 @@ const Navbar = () => {
       ref.current.classList.remove("translate-x-0");
       ref.current.classList.add("translate-x-full");
     }
+  };
+
+  const toggleDropdown = () => {
+    setDropdown(!dropdown);
   };
 
   const ref = useRef();
@@ -52,9 +58,48 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="cart absolute right-0  cursor-pointer top-4  mx-5 flex">
-        <Link href={"/Login"}>
-          <MdAccountCircle className="text-xl hover:text-blue-600 md:text-3xl mx-2" />
-        </Link>
+        <div
+          onMouseOver={() => {
+            setDropdown(true);
+          }}
+          onMouseLeave={() => {
+            setDropdown(false);
+          }}
+        >
+          {user.value && (
+            <MdAccountCircle className="text-xl hover:text-blue-600 md:text-3xl mx-2" />
+          )}
+          {dropdown && (
+            <div className="absolute bg-blue-300 top-7 rounded-md px-5 py-4 w-32 right-12">
+              <ul>
+                <Link href={"/myaccount"}>
+                  <li className="py-1 font-bold hover:text-blue-700 text-sm">
+                    My Account
+                  </li>
+                </Link>
+                <Link href={"/orders"}>
+                  <li className="py-1 font-bold hover:text-blue-700 text-sm">
+                    Orders
+                  </li>
+                </Link>
+
+                <li
+                  onClick={logout}
+                  className="py-1 font-bold hover:text-blue-700 text-sm"
+                >
+                  Log Out
+                </li>
+              </ul>
+            </div>
+          )}{" "}
+        </div>
+        {!user.value && (
+          <Link href={"/Login"}>
+            <button className="bg-blue-600 px-2 py-1 rounded-md text-sm text-white">
+              Login
+            </button>
+          </Link>
+        )}
         <FaShoppingCart
           onClick={toggleCart}
           className="text-xl hover:text-blue-600 md:text-3xl mx-2"

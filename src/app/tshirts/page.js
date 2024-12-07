@@ -43,6 +43,12 @@ const page = async () => {
       <section className="text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-wrap -m-4 justify-center">
+            {Object.values(tshirts).length === 0 && (
+              <p>
+                Sorry all the tshirts are currently out of stock. New stock
+                coming soon. Stay Tuned.
+              </p>
+            )}
             {Object.values(tshirts).map((tshirt) => {
               return (
                 <Link key={tshirt._id} href={`products/${tshirt.slug}`}>

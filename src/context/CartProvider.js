@@ -11,6 +11,8 @@ export const useCart = () => {
 
 const CartProvider = ({ children }) => {
   const [cart, setCart] = useState({});
+  const [user, setUser] = useState({ value: null });
+  const [key, setKey] = useState(0);
   const router = useRouter();
   const [subTotal, setSubTotal] = useState(0);
   useEffect(() => {
@@ -23,7 +25,19 @@ const CartProvider = ({ children }) => {
       console.log(error);
       localStorage.clear();
     }
-  }, []);
+
+    const token = localStorage.getItem("token");
+    if (token) {
+      setUser({ value: token });
+      setKey(Math.random());
+    }
+  }, [router.query]);
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    setUser({ value: null });
+    setKey(Math.random());
+  };
 
   const saveCart = (myCart) => {
     localStorage.setItem("cart", JSON.stringify(myCart));
@@ -76,7 +90,18 @@ const CartProvider = ({ children }) => {
   };
   return (
     <CartContext.Provider
-      value={{ buyNow, cart, subTotal, addToCart, clearCart, removeFromCart }}
+      key={key}
+      value={{
+        logout,
+        buyNow,
+        user,
+        cart,
+        subTotal,
+        addToCart,
+        clearCart,
+        removeFromCart,
+        setUser,
+      }}
     >
       {children}
     </CartContext.Provider>
